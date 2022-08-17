@@ -1,10 +1,13 @@
 package com.greemoid.jokesandquotes
 
+import retrofit2.Call
+import retrofit2.http.GET
+
 
 interface JokeService {
 
-
-    fun getJoke(callBack: ServiceCallback)
+    @GET("https://nova-joke-api.netlify.app/.netlify/functions/index/api/random")
+    fun getJoke(): Call<JokeDTO>
 
 }
 

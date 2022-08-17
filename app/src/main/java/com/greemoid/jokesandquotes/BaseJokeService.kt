@@ -1,6 +1,8 @@
+/*
 package com.greemoid.jokesandquotes
 
 import com.google.gson.Gson
+import retrofit2.Call
 import java.io.BufferedInputStream
 import java.io.InputStreamReader
 import java.lang.Exception
@@ -35,4 +37,6 @@ class BaseJokeService(private val gson: Gson) : JokeService {
         const val JOKE_URL = "https://nova-joke-api.netlify.app/.netlify/functions/index/api/random"
     }
 
-}
+
+
+}*/
