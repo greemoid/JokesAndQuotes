@@ -1,3 +1,4 @@
+/*
 package com.greemoid.jokesandquotes
 
 import retrofit2.Call
@@ -10,14 +11,14 @@ class TestModel(
     resourceManager: ResourceManager,
 ) : Model {
 
-    private var callback: ResultCallback? = null
+    private var callback: JokeCallback? = null
     private var count = 0
     private val noConnection = NoConnection(resourceManager)
     private val serviceUnavailable = ServiceUnavailable(resourceManager)
 
     override fun getJoke() {
-        baseJokeService.getJoke().enqueue(object : Callback<JokeDTO> {
-            override fun onResponse(call: Call<JokeDTO>, response: Response<JokeDTO>) {
+        baseJokeService.getJoke().enqueue(object : Callback<JokeServerModel> {
+            override fun onResponse(call: Call<JokeServerModel>, response: Response<JokeServerModel>) {
                 if (response.isSuccessful) {
                     callback?.provideSuccess(response.body()!!.toJoke())
                 } else {
@@ -25,7 +26,7 @@ class TestModel(
                 }
             }
 
-            override fun onFailure(call: Call<JokeDTO>, t: Throwable) {
+            override fun onFailure(call: Call<JokeServerModel>, t: Throwable) {
                 if (t is UnknownHostException) {
                     callback?.provideError(noConnection)
                 } else {
@@ -36,7 +37,7 @@ class TestModel(
         })
     }
 
-    override fun init(callback: ResultCallback) {
+    override fun init(callback: JokeCallback) {
         this.callback = callback
     }
 
@@ -45,4 +46,4 @@ class TestModel(
     }
 
 
-}
+}*/

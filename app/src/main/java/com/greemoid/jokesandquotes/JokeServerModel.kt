@@ -2,7 +2,7 @@ package com.greemoid.jokesandquotes
 
 import com.google.gson.annotations.SerializedName
 
-data class JokeDTO(
+data class JokeServerModel(
     @SerializedName("id")
     private val id: Int,
     @SerializedName("type")
@@ -12,5 +12,5 @@ data class JokeDTO(
     @SerializedName("punchline")
     private val punchline: String
 ) {
-    fun toJoke() = Joke(setup, punchline)
+    fun toJoke() = Joke(id, type, setup, punchline)
 }

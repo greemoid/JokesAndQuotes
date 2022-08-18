@@ -7,19 +7,20 @@ import retrofit2.http.GET
 interface JokeService {
 
     @GET("https://nova-joke-api.netlify.app/.netlify/functions/index/api/random")
-    fun getJoke(): Call<JokeDTO>
+    fun getJoke(): Call<JokeServerModel>
 
 }
 
-interface ServiceCallback {
+interface JokeCloudCallback {
 
-    fun returnSuccess(data: JokeDTO)
+    fun provide(joke: Joke)
 
-    fun returnError(type: ErrorType)
+    fun fail(error: ErrorType)
 
 }
+
 
 enum class ErrorType {
     NO_CONNECTION,
-    OTHER
+    SERVICE_UNAVAILABLE
 }
