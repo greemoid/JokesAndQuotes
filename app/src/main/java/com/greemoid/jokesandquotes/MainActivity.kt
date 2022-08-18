@@ -3,9 +3,7 @@ package com.greemoid.jokesandquotes
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.button)
         val textView = findViewById<TextView>(R.id.textView)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        val btnChange = findViewById<ImageView>(R.id.btnAdd)
+        val checkBox = findViewById<CheckBox>(R.id.checkBox)
 
         progressBar.visibility = View.INVISIBLE
 
@@ -27,15 +27,26 @@ class MainActivity : AppCompatActivity() {
             viewModel.getJoke()
         }
 
-        viewModel.init(object : TextCallback {
+
+        viewModel.init(object : DataCallback {
+
             override fun provideText(text: String) = runOnUiThread {
                 button.isEnabled = true
                 progressBar.visibility = View.INVISIBLE
                 textView.text = text
             }
-
+            override fun provideIconRes(id: Int) = runOnUiThread {
+                btnChange.setImageResource(id)
+            }
         })
 
+        checkBox.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.chooseFavorites(isChecked)
+        }
+
+        btnChange.setOnClickListener {
+            viewModel.changeJokeStatus()
+        }
     }
 
     override fun onDestroy() {

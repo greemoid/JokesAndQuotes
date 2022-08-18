@@ -2,24 +2,34 @@ package com.greemoid.jokesandquotes
 
 class ViewModel(private val model: Model) {
 
-    private var callback: TextCallback? = null
+    private var callback: DataCallback? = null
 
-    fun init(callback: TextCallback) {
-        this.callback = callback
-        model.init(object : ResultCallback {
-            override fun provideSuccess(data: Joke) {
-                callback.provideText(data.getJoke())
+    private val jokeCallback = object : JokeCallback {
+        override fun provide(joke: JokeUiModel) {
+            callback?.let {
+                joke.map(it)
             }
+        }
 
-            override fun provideError(error: JokeFailure) {
-                callback.provideText(error.getMessage())
-            }
-        })
     }
 
-    fun getJoke() {
+    fun init(callback: DataCallback) {
+        this.callback = callback
+        model.init(jokeCallback)
+    }
+
+    fun chooseFavorites(favorites: Boolean) {
+        model.chooseDataSource(favorites)
+    }
+
+    fun changeJokeStatus() {
+        model.changeJokeStatus(jokeCallback)
+    }
+
+    fun getJoke()  {
         model.getJoke()
     }
+
 
     fun clear() {
         callback = null

@@ -1,12 +1,15 @@
 package com.greemoid.jokesandquotes
 
-import android.service.carrier.CarrierMessagingService
 
 interface Model {
 
     fun getJoke()
 
-    fun init(callback: ResultCallback)
+    fun changeJokeStatus(jokeCallback: JokeCallback)
+
+    fun chooseDataSource(cached: Boolean)
+
+    fun init(callback: JokeCallback)
 
     fun clear()
 }

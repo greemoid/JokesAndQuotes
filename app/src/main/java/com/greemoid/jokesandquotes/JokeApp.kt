@@ -2,6 +2,10 @@ package com.greemoid.jokesandquotes
 
 import android.app.Application
 import com.google.gson.Gson
+import io.realm.Realm
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 class JokeApp : Application() {
 
@@ -9,6 +13,14 @@ class JokeApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        viewModel = ViewModel(TestModel(BaseJokeService(Gson()), BaseResourceManager(this)))
+        Realm.init(this)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://www.google.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        viewModel = ViewModel(BaseModel(
+            BaseCachedDataSource(Realm.getDefaultInstance()),
+            BaseCloudDataSource(retrofit.create(JokeService::class.java)),
+            BaseResourceManager(this)))
     }
 }
